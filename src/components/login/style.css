@@ -1,0 +1,136 @@
+:root {
+      --bg: #f3f6f8;
+      --card: #ffffff;
+      --accent: #C03082; /* puedes cambiar */
+      --muted: #6b7280;
+      --radius: 12px;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    html, body {
+      height: 100vh;
+      margin: 0;
+      background-image: url('fondo.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      overflow: hidden;
+    }
+    .center {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .card {
+      width:100%;
+      max-width:420px;
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:0 10px 30px rgba(2,6,23,0.08);
+      padding:28px;
+      box-sizing:border-box;
+    }
+
+    h1 { margin:0 0 8px 0; font-size:1.25rem; color: #111827; }
+    p.lead { margin:0 0 20px 0; color:var(--muted); font-size:0.95rem; }
+
+    label { display:block; font-size:0.85rem; margin-bottom:6px; color:#374151; }
+    input[type="email"], input[type="password"] {
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #e6e9ee;
+      box-sizing:border-box;
+      font-size:0.95rem;
+      outline:none;
+    }
+    input[type="email"]:focus, input[type="password"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(36,81,147,0.08);
+    }
+
+    .row { display:flex; align-items:center; justify-content:space-between; margin-top:12px; }
+    .remember { display:flex; gap:8px; align-items:center; color:var(--muted); font-size:0.9rem; }
+    button.btn {
+      margin-top:18px;
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:0;
+      background:var(--accent);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      font-size:1rem;
+    }
+    button.btn:active { transform:translateY(1px); }
+
+    .helper { margin-top:14px; text-align:center; color:var(--muted); font-size:0.9rem; }
+    .error { margin-top:10px; color:#b91c1c; font-size:0.9rem; display:none; }
+
+    @media (max-width:420px) {
+      .card { padding:18px; }
+    }
+
+    @media (max-width: 800px) {
+      .center {
+        padding: 0;
+      }
+      .card {
+        margin: 24px 8px;
+        max-width: 95vw;
+        min-width: 0;
+        width: 100%;
+        padding: 18px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .center {
+        padding: 0;
+      }
+      .card {
+        margin: 16px 4px;
+        max-width: 100vw;
+        min-width: 0;
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 16px rgba(2,6,23,0.10);
+      }
+      h1 {
+        font-size: 1.1rem;
+      }
+      input[type="email"], input[type="password"] {
+        padding: 10px 10px;
+        font-size: 0.95rem;
+      }
+      button.btn {
+        padding: 10px 10px;
+        font-size: 0.95rem;
+      }
+      .row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .card {
+        padding: 6px;
+        margin: 8px 2px;
+      }
+      h1 {
+        font-size: 1rem;
+      }
+    }
+    .logo {
+      display: block;
+      margin: 0 auto 16px auto;
+      object-fit: cover;
+    }

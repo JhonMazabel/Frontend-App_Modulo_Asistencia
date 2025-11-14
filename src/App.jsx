@@ -1,7 +1,6 @@
 import React from "react";
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar";
-import HomeContent from "./components/HomeContent/HomeContent";
 import "./index.css";
 
 export default function App() {
@@ -11,14 +10,7 @@ export default function App() {
   return (
     <div className="app-layout">
       <Header username={username} />
-      <div className="layout__body">
-        <aside className="layout__sidebar">
-          <Sidebar />
-        </aside>
-        <main className="layout__main">
-          <HomeContent />
-        </main>
-      </div>
+      <Sidebar />
     </div>
   );
 }

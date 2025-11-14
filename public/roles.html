@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Roles - Estudiantes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ea66af 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            color: #ea66b3;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ea66af;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ea66b3;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #ea66b3;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #ad1d29;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(234, 102, 135, 0.4);
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-edit {
+            background: #f59e0b;
+            color: white;
+            padding: 6px 12px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        .btn-edit:hover {
+            background: #d97706;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #f8f9fa;
+            color: #ea66b3;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-inactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #7a0e38;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Sistema de Gestión de Roles</h1>
+
+        <div id="alertContainer"></div>
+
+        <!-- Formulario de Roles -->
+        <div class="card">
+            <h2 id="formTitle">➕ Crear Nuevo Rol</h2>
+            <form id="rolForm">
+                <input type="hidden" id="rolId">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre del Rol *</label>
+                    <input type="text" id="nombre" required placeholder="Ej: Estudiante Regular">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" placeholder="Descripción del rol..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="permisos">Permisos</label>
+                    <input type="text" id="permisos" placeholder="Ej: lectura, escritura, edición">
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="activo" checked>
+                        <label for="activo" style="margin-bottom: 0;">Rol activo</label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Crear Rol</button>
+                    <button type="button" class="btn btn-success" id="cancelBtn" style="display: none;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lista de Roles -->
+        <div class="card">
+            <h2>📋 Roles Registrados</h2>
+            <div id="rolesTableContainer">
+                <div class="empty-state">Cargando roles...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulación de base de datos en memoria
+        let roles = [
+            {
+                id: 1,
+                nombre: "Estudiante Regular",
+                descripcion: "Estudiante con acceso básico",
+                permisos: "lectura, consulta",
+                activo: 1,
+                fecha_creacion: new Date().toISOString()
+            },
+            {
+                id: 2,
+                nombre: "Monitor",
+                descripcion: "Estudiante con permisos de monitor de clase",
+                permisos: "lectura, consulta, moderación",
+                activo: 1,
+                fecha_creacion: new Date().toISOString()
+            },
+            {
+                id: 3,
+                nombre: "Representante",
+                descripcion: "Representante estudiantil",
+                permisos: "lectura, consulta, gestión",
+                activo: 1,
+                fecha_creacion: new Date().toISOString()
+            }
+        ];
+        let nextId = 4;
+        let editingId = null;
+
+        // Elementos del DOM
+        const rolForm = document.getElementById('rolForm');
+        const formTitle = document.getElementById('formTitle');
+        const submitBtn = document.getElementById('submitBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const alertContainer = document.getElementById('alertContainer');
+
+        // Mostrar alerta
+        function showAlert(message, type = 'success') {
+            alertContainer.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            setTimeout(() => {
+                alertContainer.innerHTML = '';
+            }, 3000);
+        }
+
+        // Renderizar tabla de roles
+        function renderRoles() {
+            const container = document.getElementById('rolesTableContainer');
+            
+            if (roles.length === 0) {
+                container.innerHTML = '<div class="empty-state">No hay roles registrados</div>';
+                return;
+            }
+
+            const table = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Permisos</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${roles.map(rol => `
+                            <tr>
+                                <td>${rol.id}</td>
+                                <td><strong>${rol.nombre}</strong></td>
+                                <td>${rol.descripcion || '-'}</td>
+                                <td>${rol.permisos || '-'}</td>
+                                <td>
+                                    <span class="badge ${rol.activo ? 'badge-active' : 'badge-inactive'}">
+                                        ${rol.activo ? 'Activo' : 'Inactivo'}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-edit" onclick="editRol(${rol.id})">Editar</button>
+                                    <button class="btn btn-danger" onclick="deleteRol(${rol.id})">Eliminar</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            container.innerHTML = table;
+        }
+
+        // Crear o actualizar rol
+        rolForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const rolData = {
+                nombre: document.getElementById('nombre').value,
+                descripcion: document.getElementById('descripcion').value,
+                permisos: document.getElementById('permisos').value,
+                activo: document.getElementById('activo').checked ? 1 : 0
+            };
+
+            if (editingId) {
+                // Actualizar
+                const index = roles.findIndex(r => r.id === editingId);
+                roles[index] = { ...roles[index], ...rolData };
+                showAlert('✅ Rol actualizado exitosamente');
+                resetForm();
+            } else {
+                // Crear
+                const newRol = {
+                    id: nextId++,
+                    ...rolData,
+                    fecha_creacion: new Date().toISOString()
+                };
+                roles.unshift(newRol);
+                showAlert('✅ Rol creado exitosamente');
+                rolForm.reset();
+                document.getElementById('activo').checked = true;
+            }
+
+            renderRoles();
+        });
+
+        // Editar rol
+        window.editRol = function(id) {
+            const rol = roles.find(r => r.id === id);
+            if (!rol) return;
+
+            editingId = id;
+            document.getElementById('rolId').value = rol.id;
+            document.getElementById('nombre').value = rol.nombre;
+            document.getElementById('descripcion').value = rol.descripcion || '';
+            document.getElementById('permisos').value = rol.permisos || '';
+            document.getElementById('activo').checked = rol.activo;
+
+            formTitle.textContent = '✏️ Editar Rol';
+            submitBtn.textContent = 'Actualizar Rol';
+            cancelBtn.style.display = 'inline-block';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Eliminar rol
+        window.deleteRol = function(id) {
+            if (confirm('¿Estás seguro de eliminar este rol?')) {
+                roles = roles.filter(r => r.id !== id);
+                showAlert('🗑️ Rol eliminado exitosamente');
+                renderRoles();
+            }
+        };
+
+        // Resetear formulario
+        function resetForm() {
+            editingId = null;
+            rolForm.reset();
+            document.getElementById('activo').checked = true;
+            formTitle.textContent = '➕ Crear Nuevo Rol';
+            submitBtn.textContent = 'Crear Rol';
+            cancelBtn.style.display = 'none';
+        }
+
+        // Cancelar edición
+        cancelBtn.addEventListener('click', resetForm);
+
+        // Cargar roles al iniciar
+        renderRoles();
+    </script>
+</body>
+</html>
